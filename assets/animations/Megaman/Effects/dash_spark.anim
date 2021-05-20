@@ -3,7 +3,7 @@
   "_name": "dash_spark",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.4166666666666667,
+  "_duration": 0.31666666666666665,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -14,55 +14,43 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "425ffe00-344b-46cc-89f4-35ecc9ef300a"
+              "__uuid__": "221396fe-b615-43a6-bd58-e99458df68d8"
             }
           },
           {
             "frame": 0.05,
             "value": {
-              "__uuid__": "d9c4ecc4-b4bc-43ad-abdc-95c14543fe66"
+              "__uuid__": "40e4bed8-10ea-45af-8c2f-1903b63ac154"
             }
           },
           {
             "frame": 0.1,
             "value": {
-              "__uuid__": "dd9be379-7bde-4d27-8391-f4a8041fbc58"
+              "__uuid__": "e2d9ee89-0953-4830-9004-a506f493eeaf"
             }
           },
           {
             "frame": 0.15,
             "value": {
-              "__uuid__": "2d2dc6db-ec29-4483-a3d5-fabdf941bd32"
+              "__uuid__": "63042459-f388-4877-a9be-8605bda007ba"
             }
           },
           {
             "frame": 0.2,
             "value": {
-              "__uuid__": "79c09ec1-1b1e-4fb8-bd8a-2601414110c9"
+              "__uuid__": "d464cdbf-64f1-4b61-b462-f380285c2a6f"
             }
           },
           {
             "frame": 0.25,
             "value": {
-              "__uuid__": "24e9e2e7-f230-4bd3-8bec-e6423aeefede"
+              "__uuid__": "8182b80b-ad1a-4118-a4ab-1107f0a97b3b"
             }
           },
           {
             "frame": 0.3,
             "value": {
-              "__uuid__": "1eb8e151-0916-4ffd-8d75-69c5be0d2098"
-            }
-          },
-          {
-            "frame": 0.35,
-            "value": {
-              "__uuid__": "8c1d78f4-03ef-4dcd-95ce-14a0a37d5497"
-            }
-          },
-          {
-            "frame": 0.4,
-            "value": {
-              "__uuid__": "425ffe00-344b-46cc-89f4-35ecc9ef300a"
+              "__uuid__": "c49dc017-3a83-4f02-9143-c8203ef23df9"
             }
           }
         ]

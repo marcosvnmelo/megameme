@@ -1,6 +1,6 @@
 {
   "__type__": "cc.AnimationClip",
-  "_name": "shoot_light_level_1",
+  "_name": "gunshot_level_1",
   "_objFlags": 0,
   "_native": "",
   "_duration": 0.13333333333333333,
@@ -14,25 +14,25 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "1f48e629-cec7-48dd-a9d5-b37308495bc9"
+              "__uuid__": "a3f27e00-574c-4dd9-a8ab-ad97a0cebe14"
             }
           },
           {
             "frame": 0.03333333333333333,
             "value": {
-              "__uuid__": "5d706d0c-83e8-4ffd-ade6-ab209c66bde3"
+              "__uuid__": "72467d88-f08f-4816-af49-97629b9178c0"
             }
           },
           {
             "frame": 0.06666666666666667,
             "value": {
-              "__uuid__": "c7a36d91-f5b3-4415-a516-551e505dc789"
+              "__uuid__": "9c8bfa35-2e9b-45cf-b423-79fb31ffe60f"
             }
           },
           {
             "frame": 0.1,
             "value": {
-              "__uuid__": "80cd5db8-fb89-489c-a629-5b484daba8e3"
+              "__uuid__": "8b2d3f0d-6391-4080-b53b-aab16a80dbb0"
             }
           },
           {
