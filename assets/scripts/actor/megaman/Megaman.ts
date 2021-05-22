@@ -10,4 +10,8 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   public get state(): MEGAMAN_STATES {
     return this._state;
   }
+
+  public set state(newValue: MEGAMAN_STATES) {
+    this._state = newValue;
+  }
 }
