@@ -1,5 +1,6 @@
 import Actor from '../Actor';
 import DIRECTIONS from '../DIRECTIONS';
+import PHYSICAL_COLLISION_TAGS from '../PHYSICAL_COLLISION_TAGS';
 import MEGAMAN_STATES from './MEGAMAN_STATES';
 
 const { ccclass } = cc._decorator;
@@ -18,11 +19,16 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
 
   private walkForce = 10000;
 
-  private flyForce = 2000;
+  private flyForce = 4000;
 
   private maxWalkSpeed = 250;
 
-  private maxFlySpeed = 100;
+  private maxFlySpeed = 150;
+
+  private _isWallSliding = {
+    direction: DIRECTIONS.RIGHT,
+    isSliding: false,
+  };
 
   public get state(): MEGAMAN_STATES {
     return this._state;
@@ -53,11 +59,29 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
       this.state = MEGAMAN_STATES.JUMPING;
     }
 
-    if (!newValue && this.state === MEGAMAN_STATES.FALLING) {
+    if (!newValue && (this.state === MEGAMAN_STATES.FALLING || this.state === MEGAMAN_STATES.WALL_KICK)) {
       this.state = MEGAMAN_STATES.LANDING;
     }
 
     this._isJumping = newValue;
+  }
+
+  public get isWallSliding(): { direction: DIRECTIONS; isSliding: boolean } {
+    return this._isWallSliding;
+  }
+
+  public set isWallSliding(newValue: { direction: DIRECTIONS; isSliding: boolean }) {
+    if (newValue.isSliding) {
+      this.schedule(this.keepPlayerOnWall, 0, cc.macro.REPEAT_FOREVER);
+      this.state = MEGAMAN_STATES.WALL_SLIDING;
+    } else {
+      this.unschedule(this.keepPlayerOnWall);
+
+      if (this.isJumping && this._isWallSliding.isSliding) {
+        this.state = MEGAMAN_STATES.WALL_KICK;
+      }
+    }
+    this._isWallSliding = newValue;
   }
 
   public onLoad(): void {
@@ -65,8 +89,39 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   }
 
   public onBeginContact(_contact: cc.PhysicsContact, selfCollider: cc.Collider, otherCollider: cc.Collider): void {
-    if (selfCollider.tag === 0 && otherCollider.tag === 3 && this.isJumping) {
+    if (
+      selfCollider.tag === PHYSICAL_COLLISION_TAGS.MEGAMAN_FEET &&
+      otherCollider.tag === PHYSICAL_COLLISION_TAGS.FLOOR &&
+      (this.isJumping || this.state === MEGAMAN_STATES.WALL_SLIDING)
+    ) {
       this.isJumping = false;
+
+      this.isWallSliding = {
+        direction: this.isWallSliding.direction,
+        isSliding: false,
+      };
+    }
+
+    if (
+      selfCollider.tag === PHYSICAL_COLLISION_TAGS.MEGAMAN_RIGHT_SIDE &&
+      otherCollider.tag === PHYSICAL_COLLISION_TAGS.RIGHT_WALL &&
+      this.isJumping
+    ) {
+      this.isWallSliding = {
+        direction: DIRECTIONS.RIGHT,
+        isSliding: true,
+      };
+    }
+
+    if (
+      selfCollider.tag === PHYSICAL_COLLISION_TAGS.MEGAMAN_LEFT_SIDE &&
+      otherCollider.tag === PHYSICAL_COLLISION_TAGS.LEFT_WALL &&
+      this.isJumping
+    ) {
+      this.isWallSliding = {
+        direction: DIRECTIONS.LEFT,
+        isSliding: true,
+      };
     }
   }
 
@@ -74,19 +129,63 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
     if (selfCollider.tag === 0 && otherCollider.tag === 3 && !this.isJumping) {
       this.isJumping = true;
     }
+
+    if (
+      selfCollider.tag === PHYSICAL_COLLISION_TAGS.MEGAMAN_RIGHT_SIDE &&
+      otherCollider.tag === PHYSICAL_COLLISION_TAGS.RIGHT_WALL &&
+      this.isJumping
+    ) {
+      this.isWallSliding = {
+        direction: this.isWallSliding.direction,
+        isSliding: false,
+      };
+    }
+
+    if (
+      selfCollider.tag === PHYSICAL_COLLISION_TAGS.MEGAMAN_LEFT_SIDE &&
+      otherCollider.tag === PHYSICAL_COLLISION_TAGS.LEFT_WALL &&
+      this.isJumping
+    ) {
+      this.isWallSliding = {
+        direction: this.isWallSliding.direction,
+        isSliding: false,
+      };
+    }
   }
 
   public jump(): void {
     if (!this.isJumping) {
       this.rigidBody.applyForceToCenter(cc.v2(0, this.jumpForce), true);
     }
+
+    if (this.state === MEGAMAN_STATES.WALL_SLIDING) {
+      this.node.x += this.isWallSliding.direction * -1 * 10;
+      this.rigidBody.applyForceToCenter(cc.v2(this.isWallSliding.direction * -1 * 9000, this.jumpForce * 1.3), true);
+
+      this.schedule(
+        () => {
+          if (this.rigidBody.linearVelocity.maxAxis() > 700) {
+            this.rigidBody.applyForceToCenter(cc.v2(0, -this.jumpForce * 10), true);
+          }
+        },
+        0,
+        300
+      );
+    }
   }
 
   public move(direction: DIRECTIONS): void {
-    if (this.state !== MEGAMAN_STATES.DASHING) {
+    if (
+      this.state !== MEGAMAN_STATES.DASHING &&
+      (this.isWallSliding.isSliding ? this.isWallSliding.direction !== direction : true)
+    ) {
       this.movePlayer(direction);
       if (direction !== this.facing) {
         this.reface(direction);
+        this.isWallSliding = {
+          direction,
+          isSliding: this.isWallSliding.isSliding,
+        };
       } else if (!this.isJumping) {
         this.state = MEGAMAN_STATES.RUNNING;
       }
@@ -121,5 +220,9 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
     if (this.state === MEGAMAN_STATES.DASHING) {
       this.unschedule(this.dashPlayer);
     }
+  }
+
+  private keepPlayerOnWall(): void {
+    this.rigidBody.applyForceToCenter(cc.v2(this.isWallSliding.direction * this.flyForce, -6000), true);
   }
 }

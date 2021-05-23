@@ -6,6 +6,8 @@ enum MEGAMAN_STATES {
   LANDING = 'landing',
   RUNNING = 'running',
   DASHING = 'dash',
+  WALL_SLIDING = 'wall_kick',
+  WALL_KICK = 'wall_kick_jump',
 }
 
 export default MEGAMAN_STATES;
