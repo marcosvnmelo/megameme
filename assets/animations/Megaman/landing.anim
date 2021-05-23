@@ -3,7 +3,7 @@
   "_name": "landing",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.1,
+  "_duration": 0.03333333333333333,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -18,7 +18,7 @@
             }
           },
           {
-            "frame": 0.08333333333333333,
+            "frame": 0.016666666666666666,
             "value": {
               "__uuid__": "0107c642-f61d-412a-9edd-7ab2c4a78c3a"
             }
@@ -29,7 +29,7 @@
   },
   "events": [
     {
-      "frame": 0.08333333333333333,
+      "frame": 0.016666666666666666,
       "func": "onAnimationEnd",
       "params": [
         "landing"
