@@ -14,4 +14,8 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   public set state(newValue: MEGAMAN_STATES) {
     this._state = newValue;
   }
+
+  public jump(): void {
+    this.node.getComponent(cc.Animation).play(MEGAMAN_STATES.JUMP);
+  }
 }
