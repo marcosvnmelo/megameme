@@ -4,6 +4,7 @@ enum MEGAMAN_STATES {
   JUMP = 'jump',
   FALLING = 'falling',
   LANDING = 'landing',
+  RUNNING = 'running',
 }
 
 export default MEGAMAN_STATES;

@@ -31,7 +31,6 @@ export default class MegamanStateMachine extends StateMachine<MEGAMAN_STATES, Me
         break;
 
       default:
-        console.log(state);
         break;
     }
   }
