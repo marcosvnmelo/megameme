@@ -31,6 +31,11 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   public set state(newValue: MEGAMAN_STATES) {
     if (newValue !== this._state)
       switch (newValue) {
+        case MEGAMAN_STATES.JUMPING:
+          if (this._state === MEGAMAN_STATES.DASHING) this.stopDash();
+          this.node.getComponent(cc.Animation).play(newValue);
+          break;
+
         default:
           this.node.getComponent(cc.Animation).play(newValue);
           break;
@@ -45,7 +50,7 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
 
   public set isJumping(newValue: boolean) {
     if (newValue) {
-      this.state = MEGAMAN_STATES.JUMP;
+      this.state = MEGAMAN_STATES.JUMPING;
     }
 
     if (!newValue && this.state === MEGAMAN_STATES.FALLING) {
@@ -78,11 +83,13 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   }
 
   public move(direction: DIRECTIONS): void {
-    this.movePlayer(direction);
-    if (direction !== this.facing) {
-      this.reface(direction);
-    } else if (!this.isJumping) {
-      this.state = MEGAMAN_STATES.RUNNING;
+    if (this.state !== MEGAMAN_STATES.DASHING) {
+      this.movePlayer(direction);
+      if (direction !== this.facing) {
+        this.reface(direction);
+      } else if (!this.isJumping) {
+        this.state = MEGAMAN_STATES.RUNNING;
+      }
     }
   }
 
@@ -95,5 +102,24 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   private reface(direction: DIRECTIONS): void {
     this.node.scaleX *= -1;
     this.facing = direction;
+  }
+
+  public dash(): void {
+    if (!this.isJumping && this.state !== MEGAMAN_STATES.DASHING) {
+      this.state = MEGAMAN_STATES.DASHING;
+      this.schedule(this.dashPlayer, 0, cc.macro.REPEAT_FOREVER);
+    }
+  }
+
+  private dashPlayer(): void {
+    if (Math.abs(this.rigidBody.linearVelocity.x) < this.maxWalkSpeed * 2) {
+      this.rigidBody.applyForceToCenter(cc.v2(this.facing * this.walkForce, 0), true);
+    }
+  }
+
+  public stopDash(): void {
+    if (this.state === MEGAMAN_STATES.DASHING) {
+      this.unschedule(this.dashPlayer);
+    }
   }
 }

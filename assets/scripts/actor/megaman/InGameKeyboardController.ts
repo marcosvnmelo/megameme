@@ -28,6 +28,11 @@ export default class InGameKeyboardController extends KeyboardController {
 
   public onKeyDown(event: cc.Event.EventKeyboard): void {
     switch (event.keyCode) {
+      case cc.macro.KEY.num5:
+        this.megaman.dash();
+
+        break;
+
       case cc.macro.KEY.space:
         this.megaman.jump();
         break;
@@ -66,9 +71,11 @@ export default class InGameKeyboardController extends KeyboardController {
   }
 
   private stop(): void {
-    if (!this.megaman.isJumping) {
-      this.megaman.state = MEGAMAN_STATES.IDLE;
+    if (this.megaman.state !== MEGAMAN_STATES.DASHING) {
+      if (!this.megaman.isJumping) {
+        this.megaman.state = MEGAMAN_STATES.IDLE;
+      }
+      this.node.parent.getComponent(cc.RigidBody).linearVelocity.x = 0;
     }
-    this.node.parent.getComponent(cc.RigidBody).linearVelocity.x = 0;
   }
 }

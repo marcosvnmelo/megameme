@@ -22,11 +22,16 @@ export default class MegamanStateMachine extends StateMachine<MEGAMAN_STATES, Me
 
   public onAnimationEnd(state: MEGAMAN_STATES): void {
     switch (state) {
-      case MEGAMAN_STATES.JUMP:
+      case MEGAMAN_STATES.JUMPING:
         this.schedule(this.checkIsFalling, 0, cc.macro.REPEAT_FOREVER);
         break;
 
       case MEGAMAN_STATES.LANDING:
+        this.megaman.state = MEGAMAN_STATES.IDLE;
+        break;
+
+      case MEGAMAN_STATES.DASHING:
+        this.megaman.stopDash();
         this.megaman.state = MEGAMAN_STATES.IDLE;
         break;
 
