@@ -72,7 +72,9 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   }
 
   public jump(): void {
-    this.rigidBody.applyForceToCenter(cc.v2(0, this.jumpForce), true);
+    if (!this.isJumping) {
+      this.rigidBody.applyForceToCenter(cc.v2(0, this.jumpForce), true);
+    }
   }
 
   public move(direction: DIRECTIONS): void {
