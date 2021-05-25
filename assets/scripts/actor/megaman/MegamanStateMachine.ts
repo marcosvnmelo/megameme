@@ -30,8 +30,13 @@ export default class MegamanStateMachine extends StateMachine<MEGAMAN_STATES, Me
         this.megaman.state = MEGAMAN_STATES.IDLE;
         break;
 
+      case MEGAMAN_STATES.DASHING_SHOOTING:
       case MEGAMAN_STATES.DASHING:
         this.megaman.stopDash();
+        this.megaman.state = MEGAMAN_STATES.IDLE;
+        break;
+
+      case MEGAMAN_STATES.IDLE_SHOOTING:
         this.megaman.state = MEGAMAN_STATES.IDLE;
         break;
 

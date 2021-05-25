@@ -12,6 +12,24 @@ export default class InGameKeyboardController extends KeyboardController {
 
   private movePressedButtons: Array<boolean> = [];
 
+  private _isCharging = false;
+
+  public get isCharging(): boolean {
+    return this._isCharging;
+  }
+
+  public set isCharging(newValue: boolean) {
+    if (!this._isCharging && newValue) {
+      this.megaman.charge();
+    }
+
+    if (this._isCharging && !newValue) {
+      this.megaman.stopCharge();
+    }
+
+    this._isCharging = newValue;
+  }
+
   public start(): void {
     this.megaman = this.node.parent.getComponent(Megaman);
   }
@@ -28,9 +46,12 @@ export default class InGameKeyboardController extends KeyboardController {
 
   public onKeyDown(event: cc.Event.EventKeyboard): void {
     switch (event.keyCode) {
+      case cc.macro.KEY.num4:
+        this.isCharging = true;
+        break;
+
       case cc.macro.KEY.num5:
         this.megaman.dash();
-
         break;
 
       case cc.macro.KEY.space:
@@ -53,6 +74,10 @@ export default class InGameKeyboardController extends KeyboardController {
 
   public onKeyUp(event: cc.Event.EventKeyboard): void {
     switch (event.keyCode) {
+      case cc.macro.KEY.num4:
+        this.isCharging = false;
+        break;
+
       case cc.macro.KEY.a:
       case cc.macro.KEY.left:
         delete this.movePressedButtons['LEFT'];

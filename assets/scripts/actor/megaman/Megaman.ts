@@ -1,6 +1,8 @@
 import Actor from '../Actor';
 import DIRECTIONS from '../DIRECTIONS';
 import PHYSICAL_COLLISION_TAGS from '../PHYSICAL_COLLISION_TAGS';
+import ChargingEffect from './effects/ChargingEffect';
+import CHARGING_EFFECTS from './effects/CHARGING_EFFECTS';
 import MEGAMAN_STATES from './MEGAMAN_STATES';
 
 const { ccclass } = cc._decorator;
@@ -30,6 +32,12 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
     isSliding: false,
   };
 
+  private _chargeLevel = 0;
+
+  private isShooting = false;
+
+  private chargingEffectNode: ChargingEffect;
+
   public get state(): MEGAMAN_STATES {
     return this._state;
   }
@@ -38,14 +46,44 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
     if (newValue !== this._state)
       switch (newValue) {
         case MEGAMAN_STATES.JUMPING:
-          if (this._state === MEGAMAN_STATES.DASHING) this.stopDash();
+          if (this._state === MEGAMAN_STATES.DASHING || this._state === MEGAMAN_STATES.DASHING_SHOOTING)
+            this.stopDash();
           this.node.getComponent(cc.Animation).play(newValue);
+          break;
+
+        case MEGAMAN_STATES.RUNNING_SHOOTING:
+          this.keepAnimationTimeonSwitch(newValue);
+          break;
+
+        case MEGAMAN_STATES.RUNNING:
+          if (this._state === MEGAMAN_STATES.RUNNING_SHOOTING) this.keepAnimationTimeonSwitch(newValue);
+          else this.node.getComponent(cc.Animation).play(newValue);
+          break;
+
+        case MEGAMAN_STATES.DASHING_SHOOTING:
+          this.keepAnimationTimeonSwitch(newValue);
+          break;
+
+        case MEGAMAN_STATES.DASHING:
+          if (this._state === MEGAMAN_STATES.DASHING_SHOOTING) this.keepAnimationTimeonSwitch(newValue);
+          else this.node.getComponent(cc.Animation).play(newValue);
           break;
 
         default:
           this.node.getComponent(cc.Animation).play(newValue);
           break;
       }
+    else {
+      switch (newValue) {
+        case MEGAMAN_STATES.IDLE_SHOOTING:
+          this.node.getComponent(cc.Animation).setCurrentTime(0, newValue);
+          this.node.getComponent(cc.Animation).play(newValue);
+          break;
+
+        default:
+          break;
+      }
+    }
 
     this._state = newValue;
   }
@@ -82,6 +120,32 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
       }
     }
     this._isWallSliding = newValue;
+  }
+
+  public get chargeLevel(): number {
+    return this._chargeLevel;
+  }
+
+  public set chargeLevel(newValue: number) {
+    if (newValue === 0) {
+      this.chargingEffectNode.currentEffect = CHARGING_EFFECTS.NONE;
+    }
+
+    if (newValue >= 0.5 && newValue < 1.3) {
+      this.isShooting = false;
+
+      this.chargingEffectNode.currentEffect = CHARGING_EFFECTS.LEVEL_1;
+    }
+
+    if (newValue >= 1.3) {
+      this.chargingEffectNode.currentEffect = CHARGING_EFFECTS.LEVEL_2;
+    }
+
+    this._chargeLevel = newValue;
+  }
+
+  public start(): void {
+    this.chargingEffectNode = this.node.getChildByName('ChargingEffect').getComponent(ChargingEffect);
   }
 
   public onLoad(): void {
@@ -177,6 +241,7 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   public move(direction: DIRECTIONS): void {
     if (
       this.state !== MEGAMAN_STATES.DASHING &&
+      this.state !== MEGAMAN_STATES.DASHING_SHOOTING &&
       (this.isWallSliding.isSliding ? this.isWallSliding.direction !== direction : true)
     ) {
       this.movePlayer(direction);
@@ -187,7 +252,7 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
           isSliding: this.isWallSliding.isSliding,
         };
       } else if (!this.isJumping) {
-        this.state = MEGAMAN_STATES.RUNNING;
+        this.state = this.isShooting ? MEGAMAN_STATES.RUNNING_SHOOTING : MEGAMAN_STATES.RUNNING;
       }
     }
   }
@@ -204,8 +269,9 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   }
 
   public dash(): void {
-    if (!this.isJumping && this.state !== MEGAMAN_STATES.DASHING) {
+    if (!this.isJumping && this.state !== MEGAMAN_STATES.DASHING && this.state !== MEGAMAN_STATES.DASHING_SHOOTING) {
       this.state = MEGAMAN_STATES.DASHING;
+
       this.schedule(this.dashPlayer, 0, cc.macro.REPEAT_FOREVER);
     }
   }
@@ -217,12 +283,71 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   }
 
   public stopDash(): void {
-    if (this.state === MEGAMAN_STATES.DASHING) {
+    if (this.state === MEGAMAN_STATES.DASHING || this.state === MEGAMAN_STATES.DASHING_SHOOTING) {
       this.unschedule(this.dashPlayer);
     }
   }
 
   private keepPlayerOnWall(): void {
     this.rigidBody.applyForceToCenter(cc.v2(this.isWallSliding.direction * this.flyForce, -6000), true);
+  }
+
+  private shoot(): void {
+    switch (Math.floor((this.chargeLevel / 1.3) * 2)) {
+      case 0:
+        console.log('normal');
+        break;
+      case 1:
+        console.log('1');
+        break;
+
+      default:
+        console.log('2');
+        break;
+    }
+
+    this.switchShootingAnimations();
+    this.chargeLevel = 0;
+  }
+
+  public charge(): void {
+    this.schedule(this.incrementCharge, 0.01, 130);
+    this.isShooting = true;
+  }
+
+  public stopCharge(): void {
+    this.unschedule(this.incrementCharge);
+    this.shoot();
+    this.isShooting = false;
+  }
+
+  private incrementCharge(): void {
+    this.chargeLevel += 0.01;
+  }
+
+  private switchShootingAnimations(): void {
+    switch (this.state) {
+      case MEGAMAN_STATES.IDLE:
+        this.state = MEGAMAN_STATES.IDLE_SHOOTING;
+        break;
+
+      case MEGAMAN_STATES.RUNNING:
+        this.state = MEGAMAN_STATES.RUNNING_SHOOTING;
+        break;
+
+      case MEGAMAN_STATES.DASHING:
+        this.state = MEGAMAN_STATES.DASHING_SHOOTING;
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  private keepAnimationTimeonSwitch(newValue: MEGAMAN_STATES) {
+    this.node.getComponent(cc.Animation).play(newValue);
+    this.node
+      .getComponent(cc.Animation)
+      .setCurrentTime(this.node.getComponent(cc.Animation).getAnimationState(this._state).time);
   }
 }
