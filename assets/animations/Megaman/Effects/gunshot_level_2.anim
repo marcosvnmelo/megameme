@@ -71,5 +71,13 @@
       ]
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 0.2,
+      "func": "onAnimationEnd",
+      "params": [
+        2
+      ]
+    }
+  ]
 }
