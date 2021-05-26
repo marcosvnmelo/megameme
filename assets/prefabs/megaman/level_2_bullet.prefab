@@ -138,14 +138,14 @@
     },
     "_enabled": true,
     "_defaultClip": {
-      "__uuid__": "e416d7a3-d1a6-4612-8221-bef619b84fb1"
+      "__uuid__": "1a1b3449-12df-4ef4-b167-259f9ec4f717"
     },
     "_clips": [
       {
-        "__uuid__": "e416d7a3-d1a6-4612-8221-bef619b84fb1"
+        "__uuid__": "1a1b3449-12df-4ef4-b167-259f9ec4f717"
       },
       {
-        "__uuid__": "6d95b66e-c81d-40d6-97c1-d12423a0ebbd"
+        "__uuid__": "02c24f60-8c53-447f-ae3c-2cecba6c0b82"
       }
     ],
     "playOnLoad": true,
