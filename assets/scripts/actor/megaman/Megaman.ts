@@ -1,5 +1,8 @@
 import Actor from '../Actor';
 import DIRECTIONS from '../DIRECTIONS';
+import ICanJump from '../ICanJump';
+import ICanMove from '../ICanMove';
+import ICanMoveOnAir from '../ICanMoveOnAir';
 import PHYSICAL_COLLISION_TAGS from '../PHYSICAL_COLLISION_TAGS';
 import ChargingEffect from './effects/ChargingEffect';
 import CHARGING_EFFECTS from './effects/CHARGING_EFFECTS';
@@ -9,9 +12,18 @@ import Gunshot from './projectiles/Gunshot';
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class Megaman extends Actor<MEGAMAN_STATES> {
+export default class Megaman extends Actor<MEGAMAN_STATES> implements ICanMove, ICanJump, ICanMoveOnAir {
   @property(cc.Prefab)
   public prefab: cc.Prefab = null;
+
+  @property
+  public jumpForce = 26000;
+
+  @property
+  public walkForce = 10000;
+
+  @property
+  public flyForce = 4000;
 
   private _state: MEGAMAN_STATES = MEGAMAN_STATES.IDLE;
 
@@ -20,12 +32,6 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   private facing: DIRECTIONS = DIRECTIONS.RIGHT;
 
   private rigidBody: cc.RigidBody;
-
-  private jumpForce = 26000;
-
-  private walkForce = 10000;
-
-  private flyForce = 4000;
 
   private maxWalkSpeed = 250;
 
