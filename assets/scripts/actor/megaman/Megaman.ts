@@ -4,11 +4,15 @@ import PHYSICAL_COLLISION_TAGS from '../PHYSICAL_COLLISION_TAGS';
 import ChargingEffect from './effects/ChargingEffect';
 import CHARGING_EFFECTS from './effects/CHARGING_EFFECTS';
 import MEGAMAN_STATES from './MEGAMAN_STATES';
+import Gunshot from './projectiles/Gunshot';
 
-const { ccclass } = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class Megaman extends Actor<MEGAMAN_STATES> {
+  @property(cc.Prefab)
+  public prefab: cc.Prefab = null;
+
   private _state: MEGAMAN_STATES = MEGAMAN_STATES.IDLE;
 
   private _isJumping = false;
@@ -293,20 +297,13 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
   }
 
   private shoot(): void {
-    switch (Math.floor((this.chargeLevel / 1.3) * 2)) {
-      case 0:
-        console.log('normal');
-        break;
-      case 1:
-        console.log('1');
-        break;
+    const shootLevel = Math.floor((this.chargeLevel / 1.3) * 2);
 
-      default:
-        console.log('2');
-        break;
-    }
+    const gunshot = this.node.getChildByName('Gunshot').getComponent(Gunshot);
+    gunshot.fire(shootLevel);
 
     this.switchShootingAnimations();
+
     this.chargeLevel = 0;
   }
 
