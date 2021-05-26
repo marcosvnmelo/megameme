@@ -35,13 +35,6 @@
   },
   "events": [
     {
-      "frame": 0,
-      "func": "onAnimationStart",
-      "params": [
-        "idle_shooting"
-      ]
-    },
-    {
       "frame": 0.3333333333333333,
       "func": "onAnimationEnd",
       "params": [
