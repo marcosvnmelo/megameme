@@ -3,7 +3,7 @@
   "_name": "dash",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 1.0166666666666666,
+  "_duration": 0.5,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -22,20 +22,18 @@
             "value": {
               "__uuid__": "542b3fa0-c20b-4426-b136-7c5b53829b3d"
             }
-          },
-          {
-            "frame": 0.3,
-            "value": {
-              "__uuid__": "542b3fa0-c20b-4426-b136-7c5b53829b3d"
-            }
-          },
-          {
-            "frame": 1,
-            "value": null
           }
         ]
       }
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 0.5,
+      "func": "onAnimationEnd",
+      "params": [
+        "dash"
+      ]
+    }
+  ]
 }
