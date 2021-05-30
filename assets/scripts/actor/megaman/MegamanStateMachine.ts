@@ -1,4 +1,5 @@
 import StateMachine from '../../../utils/StateMachine';
+import EffectSpawner from './effects/EffectSpawner';
 import Megaman from './Megaman';
 import MEGAMAN_STATES from './MEGAMAN_STATES';
 
@@ -14,8 +15,17 @@ export default class MegamanStateMachine extends StateMachine<MEGAMAN_STATES, Me
 
   public onAnimationStart(state: MEGAMAN_STATES): void {
     switch (state) {
+      case MEGAMAN_STATES.DASHING:
+        this.node.getChildByName('DashSparkSpawner').getComponent(EffectSpawner).spawn();
+        this.schedule(
+          () => this.node.getChildByName('SmokeEffectSpawner').getComponent(EffectSpawner).spawn(),
+          0.05,
+          7,
+          0.1
+        );
+        break;
+
       default:
-        console.log(state);
         break;
     }
   }
