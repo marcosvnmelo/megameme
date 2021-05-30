@@ -27,5 +27,13 @@
       }
     }
   },
-  "events": []
+  "events": [
+    {
+      "frame": 0,
+      "func": "onAnimationStart",
+      "params": [
+        "wall_kick"
+      ]
+    }
+  ]
 }
