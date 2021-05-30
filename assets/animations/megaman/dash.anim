@@ -29,6 +29,13 @@
   },
   "events": [
     {
+      "frame": 0,
+      "func": "onAnimationStart",
+      "params": [
+        "dash"
+      ]
+    },
+    {
       "frame": 0.5,
       "func": "onAnimationEnd",
       "params": [
