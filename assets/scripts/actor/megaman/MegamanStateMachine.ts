@@ -17,12 +17,17 @@ export default class MegamanStateMachine extends StateMachine<MEGAMAN_STATES, Me
     switch (state) {
       case MEGAMAN_STATES.DASHING:
         this.node.getChildByName('DashSparkSpawner').getComponent(EffectSpawner).spawn();
+        this.node.getChildByName('DashSparkSpawner').getComponent(EffectSpawner).spawn();
         this.schedule(
           () => this.node.getChildByName('SmokeEffectSpawner').getComponent(EffectSpawner).spawn(),
           0.05,
           7,
           0.1
         );
+        break;
+
+      case MEGAMAN_STATES.WALL_KICK:
+        this.node.getChildByName('WallKickSpawner').getComponent(EffectSpawner).spawn();
         break;
 
       default:
