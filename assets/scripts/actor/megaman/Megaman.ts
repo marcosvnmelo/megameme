@@ -3,6 +3,7 @@ import DIRECTIONS from '../DIRECTIONS';
 import PHYSICAL_COLLISION_TAGS from '../PHYSICAL_COLLISION_TAGS';
 import ChargingEffect from './effects/ChargingEffect';
 import CHARGING_EFFECTS from './effects/CHARGING_EFFECTS';
+import MegamanStateMachine from './MegamanStateMachine';
 import MEGAMAN_STATES from './MEGAMAN_STATES';
 import Gunshot from './projectiles/Gunshot';
 
@@ -118,6 +119,7 @@ export default class Megaman extends Actor<MEGAMAN_STATES> {
       this.state = MEGAMAN_STATES.WALL_SLIDING;
     } else {
       this.unschedule(this.keepPlayerOnWall);
+      this.node.getComponent(MegamanStateMachine).stopSpawnWallSmoke();
 
       if (this.isJumping && this._isWallSliding.isSliding) {
         this.state = MEGAMAN_STATES.WALL_KICK;
