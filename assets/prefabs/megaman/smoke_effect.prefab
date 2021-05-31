@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Bullet",
+    "_name": "SmokeEffect",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -27,16 +27,10 @@
       },
       {
         "__id__": 4
-      },
-      {
-        "__id__": 5
-      },
-      {
-        "__id__": 6
       }
     ],
     "_prefab": {
-      "__id__": 7
+      "__id__": 5
     },
     "_opacity": 255,
     "_color": {
@@ -48,8 +42,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 14,
-      "height": 20
+      "width": 8,
+      "height": 8
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -67,8 +61,8 @@
         0,
         0,
         1,
-        1,
-        1,
+        2,
+        2,
         1
       ]
     },
@@ -101,7 +95,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "2a7c0aad-dae7-44c9-b640-27c3badcb472"
+      "__uuid__": "5ce7b565-ea09-4bc2-bc8f-ab9d8dd434f5"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -118,18 +112,6 @@
     "_id": ""
   },
   {
-    "__type__": "a1941Ny+HNNlrvEFXXs9son",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "speed": 700,
-    "ownerPath": "Canvas/Megaman",
-    "_id": ""
-  },
-  {
     "__type__": "cc.Animation",
     "_name": "",
     "_objFlags": 0,
@@ -138,63 +120,24 @@
     },
     "_enabled": true,
     "_defaultClip": {
-      "__uuid__": "1a1b3449-12df-4ef4-b167-259f9ec4f717"
+      "__uuid__": "85bc40b8-273c-478c-9259-54f4d437cf8a"
     },
     "_clips": [
       {
-        "__uuid__": "1a1b3449-12df-4ef4-b167-259f9ec4f717"
-      },
-      {
-        "__uuid__": "02c24f60-8c53-447f-ae3c-2cecba6c0b82"
+        "__uuid__": "85bc40b8-273c-478c-9259-54f4d437cf8a"
       }
     ],
     "playOnLoad": true,
     "_id": ""
   },
   {
-    "__type__": "cc.RigidBody",
+    "__type__": "43a07iJ4ttEEr3GpN7usgUf",
     "_name": "",
     "_objFlags": 0,
     "node": {
       "__id__": 1
     },
     "_enabled": true,
-    "_type": 2,
-    "_allowSleep": true,
-    "_gravityScale": 0,
-    "_linearDamping": 0,
-    "_angularDamping": 0,
-    "_linearVelocity": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_angularVelocity": 0,
-    "_fixedRotation": true,
-    "enabledContactListener": false,
-    "bullet": true,
-    "awakeOnLoad": true,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.BoxCollider",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "tag": 0,
-    "_offset": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_size": {
-      "__type__": "cc.Size",
-      "width": 14,
-      "height": 20
-    },
     "_id": ""
   },
   {
@@ -203,7 +146,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "e152bdd4-93cf-43e5-a61a-7b951a985e7f"
+      "__uuid__": "fc65e1ff-4b78-4f7a-b854-970ced79c1f8"
     },
     "fileId": "",
     "sync": false

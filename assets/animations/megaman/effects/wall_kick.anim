@@ -1,0 +1,35 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "wall_kick",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.1,
+  "sample": 60,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "46cba117-9b9f-4ef9-b5b6-64efd4e93c29"
+            }
+          },
+          {
+            "frame": 0.08333333333333333,
+            "value": null
+          }
+        ]
+      }
+    }
+  },
+  "events": [
+    {
+      "frame": 0.08333333333333333,
+      "func": "onAnimationEnd",
+      "params": []
+    }
+  ]
+}

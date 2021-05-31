@@ -1,4 +1,5 @@
 import StateMachine from '../../../utils/StateMachine';
+import EffectSpawner from './effects/EffectSpawner';
 import Megaman from './Megaman';
 import MEGAMAN_STATES from './MEGAMAN_STATES';
 
@@ -14,8 +15,26 @@ export default class MegamanStateMachine extends StateMachine<MEGAMAN_STATES, Me
 
   public onAnimationStart(state: MEGAMAN_STATES): void {
     switch (state) {
+      case MEGAMAN_STATES.DASHING:
+        this.node.getChildByName('DashSparkSpawner').getComponent(EffectSpawner).spawn();
+        this.node.getChildByName('DashSparkSpawner').getComponent(EffectSpawner).spawn();
+        this.schedule(
+          () => this.node.getChildByName('SmokeEffectSpawner').getComponent(EffectSpawner).spawn(),
+          0.05,
+          7,
+          0.1
+        );
+        break;
+
+      case MEGAMAN_STATES.WALL_KICK:
+        this.node.getChildByName('WallKickSpawner').getComponent(EffectSpawner).spawn();
+        break;
+
+      case MEGAMAN_STATES.WALL_SLIDING:
+        this.schedule(this.spawnWallSmoke, 0.3, cc.macro.REPEAT_FOREVER, 0.4);
+        break;
+
       default:
-        console.log(state);
         break;
     }
   }
@@ -50,5 +69,13 @@ export default class MegamanStateMachine extends StateMachine<MEGAMAN_STATES, Me
       this.megaman.state = MEGAMAN_STATES.FALLING;
       this.unschedule(this.checkIsFalling);
     }
+  }
+
+  private spawnWallSmoke(): void {
+    this.node.getChildByName('WallSmokeSpawner').getComponent(EffectSpawner).spawn();
+  }
+
+  public stopSpawnWallSmoke(): void {
+    this.unschedule(this.spawnWallSmoke);
   }
 }
