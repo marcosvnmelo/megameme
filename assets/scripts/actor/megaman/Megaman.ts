@@ -7,13 +7,10 @@ import MegamanStateMachine from './MegamanStateMachine';
 import MEGAMAN_STATES from './MEGAMAN_STATES';
 import Gunshot from './projectiles/Gunshot';
 
-const { ccclass, property } = cc._decorator;
+const { ccclass } = cc._decorator;
 
 @ccclass
 export default class Megaman extends Actor<MEGAMAN_STATES> {
-  @property(cc.Prefab)
-  public prefab: cc.Prefab = null;
-
   private _state: MEGAMAN_STATES = MEGAMAN_STATES.IDLE;
 
   private _isJumping = false;
