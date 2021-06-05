@@ -14,9 +14,6 @@ const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class Megaman extends Actor<MEGAMAN_STATES> implements ICanMove, ICanJump, ICanMoveOnAir {
-  @property(cc.Prefab)
-  public prefab: cc.Prefab = null;
-
   @property
   public jumpForce = 26000;
 
