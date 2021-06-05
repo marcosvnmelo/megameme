@@ -164,6 +164,15 @@ export default class Megaman extends Actor<MEGAMAN_STATES> implements ICanMove, 
     this.rigidBody = this.getComponent(cc.RigidBody);
   }
 
+  public update(): void {
+    if (
+      (this.state === MEGAMAN_STATES.RUNNING || this.state === MEGAMAN_STATES.DASHING) &&
+      this.rigidBody.linearVelocity.x === 0
+    ) {
+      this.node.position = this.node.position.addSelf(cc.v3(0, 1, 0));
+    }
+  }
+
   public onBeginContact(_contact: cc.PhysicsContact, selfCollider: cc.Collider, otherCollider: cc.Collider): void {
     if (
       selfCollider.tag === PHYSICAL_COLLISION_TAGS.MEGAMAN_FEET &&
@@ -203,7 +212,11 @@ export default class Megaman extends Actor<MEGAMAN_STATES> implements ICanMove, 
 
   public onEndContact(_contact: cc.PhysicsContact, selfCollider: cc.Collider, otherCollider: cc.Collider): void {
     if (selfCollider.tag === 0 && otherCollider.tag === 3 && !this.isJumping) {
-      this.isJumping = true;
+      this.scheduleOnce(() => {
+        if (this.rigidBody.linearVelocity.y !== 0) {
+          this.isJumping = true;
+        }
+      }, 0.01);
     }
 
     if (
@@ -301,7 +314,7 @@ export default class Megaman extends Actor<MEGAMAN_STATES> implements ICanMove, 
   }
 
   private keepPlayerOnWall(): void {
-    this.rigidBody.applyForceToCenter(cc.v2(this.isWallSliding.direction * this.flyForce, -6000), true);
+    this.rigidBody.applyForceToCenter(cc.v2(this.isWallSliding.direction * this.flyForce, -6300), true);
   }
 
   private shoot(): void {
