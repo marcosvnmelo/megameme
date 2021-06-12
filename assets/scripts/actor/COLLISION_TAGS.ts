@@ -1,0 +1,11 @@
+/* eslint-disable no-shadow */
+enum COLLISION_TAGS {
+  MEGAMAN,
+  BREAKABLE_FLOOR,
+  CRUSHER_SENSOR,
+  CRUSHER,
+  FLOOR_BREAKER_DISABLED,
+  BREAKABLE_FLOOR_TARGET,
+}
+
+export default COLLISION_TAGS;
