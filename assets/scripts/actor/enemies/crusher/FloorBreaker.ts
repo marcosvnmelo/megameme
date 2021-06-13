@@ -1,4 +1,4 @@
-import COLLISION_TAGS from '../COLLISION_TAGS';
+import COLLISION_TAGS from '../../COLLISION_TAGS';
 import Crusher from './Crusher';
 
 const { ccclass } = cc._decorator;

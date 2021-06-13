@@ -1,4 +1,4 @@
-import StateMachine from '../../../utils/StateMachine';
+import StateMachine from '../../../../utils/StateMachine';
 import Crusher from './Crusher';
 import CRUSHER_STATES from './CRUSHER_STATES';
 
