@@ -1,6 +1,7 @@
 import Actor from '../../Actor';
 import DIRECTIONS from '../../DIRECTIONS';
 import ICanMoveOnAir from '../../ICanMoveOnAir';
+import ICanSense from '../../ICanSense';
 import CrusherStateMachine from './CrusherStateMachine';
 import CRUSHER_STATES from './CRUSHER_STATES';
 import FloorBreaker from './FloorBreaker';
@@ -8,7 +9,7 @@ import FloorBreaker from './FloorBreaker';
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class Crusher extends Actor<CRUSHER_STATES> implements ICanMoveOnAir {
+export default class Crusher extends Actor<CRUSHER_STATES> implements ICanMoveOnAir, ICanSense {
   @property
   public flyForce = 500;
 

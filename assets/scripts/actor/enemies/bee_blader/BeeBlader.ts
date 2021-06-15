@@ -1,9 +1,10 @@
+import ICanSense from '../../ICanSense';
 import PHYSICAL_COLLISION_TAGS from '../../PHYSICAL_COLLISION_TAGS';
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class BeeBlader extends cc.Component {
+export default class BeeBlader extends cc.Component implements ICanSense {
   @property(cc.Prefab)
   public bulletPrefab: cc.Prefab = null;
 
