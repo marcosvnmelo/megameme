@@ -1,0 +1,167 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "loading",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 1.6833333333333333,
+  "sample": 60,
+  "speed": 1.4,
+  "wrapMode": 1,
+  "curveData": {
+    "paths": {
+      "Body": {
+        "comps": {
+          "cc.Sprite": {
+            "spriteFrame": [
+              {
+                "frame": 0,
+                "value": {
+                  "__uuid__": "b4726974-d601-4038-af6a-e5d4604bc683"
+                }
+              },
+              {
+                "frame": 0.16666666666666666,
+                "value": {
+                  "__uuid__": "4291ae92-9817-4350-a149-15c5e8ab8946"
+                }
+              },
+              {
+                "frame": 0.3333333333333333,
+                "value": {
+                  "__uuid__": "cbd7d403-1b4f-4725-b17d-ef22986e2dc4"
+                }
+              },
+              {
+                "frame": 0.5,
+                "value": {
+                  "__uuid__": "804cc2e0-1c4e-4df4-b4d6-dd305cf26052"
+                }
+              },
+              {
+                "frame": 0.6666666666666666,
+                "value": {
+                  "__uuid__": "e21563d5-6cff-49e5-854c-582547bcf245"
+                }
+              },
+              {
+                "frame": 0.8333333333333334,
+                "value": {
+                  "__uuid__": "da9a2c8a-ec72-4621-a00c-b23b37d70019"
+                }
+              },
+              {
+                "frame": 1,
+                "value": {
+                  "__uuid__": "12344510-498c-4082-af4c-5350e0abb760"
+                }
+              },
+              {
+                "frame": 1.1666666666666667,
+                "value": {
+                  "__uuid__": "2c5a6922-f514-4d21-a724-0ba8009c8c66"
+                }
+              },
+              {
+                "frame": 1.3333333333333333,
+                "value": {
+                  "__uuid__": "77d78343-b6bf-44d5-b5df-c8dc61d3cab7"
+                }
+              },
+              {
+                "frame": 1.5,
+                "value": {
+                  "__uuid__": "8b64efc4-b5c3-4c61-bcfe-c7a640086253"
+                }
+              },
+              {
+                "frame": 1.6666666666666667,
+                "value": {
+                  "__uuid__": "77d78343-b6bf-44d5-b5df-c8dc61d3cab7"
+                }
+              }
+            ]
+          }
+        },
+        "props": {
+          "y": [
+            {
+              "frame": 0,
+              "value": -2.5
+            },
+            {
+              "frame": 0.15,
+              "value": -2.5
+            },
+            {
+              "frame": 0.16666666666666666,
+              "value": -4
+            },
+            {
+              "frame": 0.31666666666666665,
+              "value": -4
+            },
+            {
+              "frame": 0.3333333333333333,
+              "value": -5
+            },
+            {
+              "frame": 0.48333333333333334,
+              "value": -5
+            },
+            {
+              "frame": 0.5,
+              "value": -5.5
+            },
+            {
+              "frame": 0.65,
+              "value": -5.5
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": -5
+            },
+            {
+              "frame": 0.8166666666666667,
+              "value": -5
+            },
+            {
+              "frame": 0.8333333333333334,
+              "value": 2
+            }
+          ],
+          "x": [
+            {
+              "frame": 0,
+              "value": 0
+            },
+            {
+              "frame": 0.65,
+              "value": 0
+            },
+            {
+              "frame": 0.6666666666666666,
+              "value": -4
+            },
+            {
+              "frame": 0.8166666666666667,
+              "value": -4
+            },
+            {
+              "frame": 0.8333333333333334,
+              "value": 0
+            }
+          ]
+        }
+      }
+    }
+  },
+  "events": [
+    {
+      "frame": 1.6666666666666667,
+      "func": "onAnimationEnd",
+      "params": [
+        "loading"
+      ]
+    }
+  ]
+}
