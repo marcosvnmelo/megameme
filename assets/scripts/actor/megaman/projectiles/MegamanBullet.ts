@@ -1,18 +1,11 @@
+import Bullet from '../../Bullet';
 import COLLISION_TAGS from '../../COLLISION_TAGS';
 import BeeBlader from '../../enemies/bee_blader/BeeBlader';
 
-const { ccclass, property, requireComponent } = cc._decorator;
+const { ccclass } = cc._decorator;
 
 @ccclass
-@requireComponent(cc.Animation)
-@requireComponent(cc.RigidBody)
-export default class Bullet extends cc.Component {
-  @property
-  public speed = 450;
-
-  @property
-  public ownerPath = '';
-
+export default class MegamanBullet extends Bullet {
   public onLoad(): void {
     const isToRight = cc.find(this.ownerPath).scaleX > 0;
 
@@ -26,16 +19,17 @@ export default class Bullet extends cc.Component {
         this.onHitTarget();
         break;
 
+      case COLLISION_TAGS.GUN_VOLT:
+      case COLLISION_TAGS.CRUSHER_SENSOR:
+        this.onHitTarget();
+        break;
+
       default:
         break;
     }
   }
 
-  public onAnimationEnd(): void {
-    this.node.destroy();
-  }
-
-  private onHitTarget(): void {
+  protected onHitTarget(): void {
     this.node.getComponent(cc.RigidBody).linearVelocity = cc.v2(0, 0);
     this.node.getComponent(cc.Animation).play(this.node.getComponent(cc.Animation).getClips()[1].name);
   }
