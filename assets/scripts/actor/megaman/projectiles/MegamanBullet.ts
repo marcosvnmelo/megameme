@@ -21,6 +21,7 @@ export default class MegamanBullet extends Bullet {
 
       case COLLISION_TAGS.GUN_VOLT:
       case COLLISION_TAGS.CRUSHER_SENSOR:
+      case COLLISION_TAGS.ROAD_ATTACKER:
         this.onHitTarget();
         break;
 
