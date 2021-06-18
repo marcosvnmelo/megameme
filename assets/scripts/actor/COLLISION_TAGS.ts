@@ -21,6 +21,7 @@ enum COLLISION_TAGS {
   BOMB_BEEN_BOMB,
   JAMMINGER,
   BALL_DE_VOUX,
+  SPIKY,
 }
 
 export default COLLISION_TAGS;
