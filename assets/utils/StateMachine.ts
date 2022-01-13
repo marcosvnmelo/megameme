@@ -8,7 +8,7 @@ const { ccclass } = cc._decorator;
 export default abstract class StateMachine<S, T extends { state: S }> extends cc.Component {
   protected actor: T;
 
-  public abstract onAnimationStart(state: S): void;
+  public onAnimationStart?(state: S): void;
 
   public abstract onAnimationEnd(state: S): void;
 }

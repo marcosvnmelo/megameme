@@ -1,4 +1,4 @@
-import PHYSICAL_COLLISION_TAGS from '../actor/PHYSICAL_COLLISION_TAGS';
+import COLLISION_TAGS from '../actor/COLLISION_TAGS';
 import LINE_POSITIONS from './LINE_POSITIONS';
 
 const { ccclass, property } = cc._decorator;
@@ -11,8 +11,8 @@ export default class BreakableFloor extends cc.Component {
   @property
   public currentLine = 0;
 
-  public onBeginContact(_contact: cc.PhysicsContact, _selfCollider: cc.Collider, otherCollider: cc.Collider): void {
-    if (otherCollider.tag === PHYSICAL_COLLISION_TAGS.FLOOR_BREAKER) {
+  public onCollisionEnter(other: cc.BoxCollider): void {
+    if (other.tag === COLLISION_TAGS.CRUSHER) {
       switch (this.currentLine) {
         case 0:
           this.changeLine(this.nextLinePrefab, LINE_POSITIONS.POSITION_1);
